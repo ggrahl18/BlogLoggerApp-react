@@ -1,6 +1,8 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const Blog = require('./models/blog')
 
 app.use(cors())
 app.use(express.json())
@@ -22,77 +24,80 @@ let blogs = [
     author: 'Andrew Skurka',
     title: 'Andrew Skurka: Hard-won insights from out there',
     url: 'https://andrewskurka.com/',
-    votes: 7 
-  },
-  {
-    id: 2,
-    author: 'Alan Dixon',
-    title: 'ULTRALIGHT BACKPACKING & HIKING',
-    url: 'https://www.adventurealan.com/',
-    votes: 5 
+    votes: 7
   },
   {
     id: 3,
     author: 'Derek Hansen',
     title: 'The Ultimate Hang',
     url: 'https://theultimatehang.com/blog/',
-    votes: 3 
-  }
+    votes: 0
+  },
+  {
+    id: 2,
+    author: 'Alan Dixon',
+    title: 'ULTRALIGHT BACKPACKING & HIKING',
+    url: 'https://www.adventurealan.com/',
+    votes: 5
+  },
+  // FOR POSTMAN BELOW
+  // {
+  //   "author": "Derek Hansen",
+  //   "title": "The Ultimate Hang",
+  //   "url": "https://theultimatehang.com/blog/",
+  //   "votes": 0
+  // }
 ]
-
-app.get('/', (req, res) => {
-  res.send('<h1>Hello World!</h1>')
-})
-
-app.get('/api/blogs', (req, res) => {
-  res.json(blogs)
-})
 
 const generateId = () => {
   const maxId = blogs.length > 0
-  ? Math.max(...blogs.map(n => n.id))
-  : 0
+    ? Math.max(...blogs.map(n => n.id))
+    : 0
   return maxId + 1
 }
 
-app.post('/api/blogs', (request, response) => {
+app.get('/api/blogs/:id', (request, response, next) => {
+  Blog.findById(request.params.id)
+    .then(blog => {
+      if (blog) {
+        response.json(blog.toJSON())
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => next(error))
+})
+
+app.get('/api/blogs', (request, response) => {
+  Blog.find({}).then(blogs => {
+    response.json(blogs.map(blog => blog.toJSON()))
+  })
+})
+
+app.post('/api/blogs', (request, response, next) => {
   const body = request.body
 
-  if(!body.title) {
+  if(!body.title === undefined) {
     return response.status(400).json({
       error: 'content missing'
     })
   }
 
-  const blog = {
+  const blog = new Blog( {
     title: body.title,
     author: body.author,
     url: body.url,
     votes: 0,
     id: generateId()
-  }
+  })
 
-  blogs = blogs.concat(blog)
-
-  response.json(blog)
-})
-
-app.get('/api/blogs/:id', (request, response) => {
-  const id = Number(request.params.id)
-  const blog = blogs.find(blog => blog.id === id)
-  
-  if (blog) {
-    response.json(blog)
-  } else {
-    response.status(404).end()
-  }
-})
-
-app.delete('/api/blogs/:id', (request, response) => {
-  const id = Number(request.params.id)
-  blogs = blogs.filter(blog => blog.id !== id)
-
-  response.status(204).end()
+  blog
+    .save()
+    .then(savedBlog => savedBlog.toJSON())
+    .then(savedAndFormattedBlog => {
+      response.json(savedAndFormattedBlog)
+    })
+    .catch(error => next(error))
 })
 
 const unknownEndpoint = (request, response) => {
@@ -101,7 +106,20 @@ const unknownEndpoint = (request, response) => {
 
 app.use(unknownEndpoint)
 
-const PORT = process.env.PORT || 3001
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id'})
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
+  }
+  next(error)
+}
+
+app.use(errorHandler)
+
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
