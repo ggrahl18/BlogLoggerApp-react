@@ -100,6 +100,19 @@ app.post('/api/blogs', (request, response, next) => {
     .catch(error => next(error))
 })
 
+app.put('/api/blogs/:id', (request, response, next) => {
+  const body = request.body
+  const blog = {
+    votes: body.votes
+  }
+
+  Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
+    .then(updatePerson => {
+      response.json(updatePerson.toJSON())
+    })
+    .catch(error => next(error))
+})
+
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
