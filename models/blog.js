@@ -27,10 +27,9 @@ const blogSchema = new mongoose.Schema({
     work: [mongoose.SchemaTypes.Url, 'A Domain is required' ],
     profile: [mongoose.SchemaTypes.Url, 'A Domain is required'] ,
     // validate: {
-    //   validator: value => blogSchema.isURL(value, { protocols: ['http','https','ftp'], require_tld: true, require_protocol: true }),
+    //   validator: value => blogSchema.url.isURL(value, { protocols: ['http','https','ftp'], require_tld: true, require_protocol: true }),
     //   message: 'Must be a Valid URL'
-  //   }
-  // },
+    // }
   },
   votes: Number
 })
