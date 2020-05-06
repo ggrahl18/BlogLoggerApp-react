@@ -2,14 +2,6 @@ const mongoose = require('mongoose')
 
 mongoose.set('useFindAndModify', false)
 
-// mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(result => {
-//     console.log('connected to MongoDB')
-//   })
-//   .catch((error) => {
-//     console.log('error connecting to MongoDB', error.message)
-//   })
-
 const blogSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -26,10 +18,6 @@ const blogSchema = new mongoose.Schema({
     required: [ true, 'A Domain is required' ],
     work: [mongoose.SchemaTypes.Url, 'A Domain is required' ],
     profile: [mongoose.SchemaTypes.Url, 'A Domain is required'] ,
-    // validate: {
-    //   validator: value => blogSchema.url.isURL(value, { protocols: ['http','https','ftp'], require_tld: true, require_protocol: true }),
-    //   message: 'Must be a Valid URL'
-    // }
   },
   votes: Number
 })
