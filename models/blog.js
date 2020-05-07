@@ -3,6 +3,12 @@ const mongoose = require('mongoose')
 mongoose.set('useFindAndModify', false)
 
 const blogSchema = new mongoose.Schema({
+  url: {
+    type: String,
+    required: [ true, 'A Domain is required' ],
+    work: [mongoose.SchemaTypes.Url, 'A Domain is required' ],
+    profile: [mongoose.SchemaTypes.Url, 'A Domain is required'] ,
+  },
   title: {
     type: String,
     minLength: 2,
@@ -13,13 +19,11 @@ const blogSchema = new mongoose.Schema({
     minLength: 3,
     required: [ true, 'An author is required' ]
   },
-  url: {
-    type: String,
-    required: [ true, 'A Domain is required' ],
-    work: [mongoose.SchemaTypes.Url, 'A Domain is required' ],
-    profile: [mongoose.SchemaTypes.Url, 'A Domain is required'] ,
-  },
-  votes: Number
+  votes: Number,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 })
 
 blogSchema.set('toJSON', {

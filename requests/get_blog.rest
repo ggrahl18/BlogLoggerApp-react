@@ -1,0 +1,8 @@
+GET http://localhost:3001/api/blogs/5eb300cf260b844a481a4a9a
+Content-Type: application/json 
+
+# {
+# "title": "And where do we go now?", 
+# "author": "Gerry the 3rd",
+# "url": "www.google.com"
+# }

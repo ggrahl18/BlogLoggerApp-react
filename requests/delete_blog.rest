@@ -1,0 +1,10 @@
+DELETE http://localhost:3001/api/blogs/5eb2fd15a1b315459263fc41
+Content-Type: application/json 
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdncmFobCIsImlkIjoiNWViMzA4MDhmOWQyZDg1MjYzZWY5OGJjIiwiaWF0IjoxNTg4NzkxNzk5fQ.7J701GGNprc2arA3vY8szXbxMnwLOlp433g3yNdbxTg
+
+
+# {
+# "title": "And where do we go now?", 
+# "author": "Gerry the 3rd",
+# "url": "www.google.com"
+# }
