@@ -1,9 +1,9 @@
 post http://localhost:3001/api/blogs
 Content-Type: application/json 
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdncmFobCIsImlkIjoiNWViMzA4MDhmOWQyZDg1MjYzZWY5OGJjIiwiaWF0IjoxNTg4NzkxNzk5fQ.7J701GGNprc2arA3vY8szXbxMnwLOlp433g3yNdbxTg
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdncmFobCIsImlkIjoiNWViNDYxMGRiNDJiYjIzMGM3YTQ2N2Y4IiwiaWF0IjoxNTg4ODc5NjQ1fQ.Ph3KXxY0rB7JSP1v7uMMFWlghFDhLIpGcCJvWpY7fOU
 
 {
-"title": "And where do we go now?", 
-"author": "Gerry the 3rd",
+"title": "and now", 
+"author": "the g man",
 "url": "www.google.com"
 }

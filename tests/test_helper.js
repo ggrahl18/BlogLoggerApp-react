@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 
@@ -6,7 +7,7 @@ const initialBlogs = [
     title: 'React patterns',
     author: 'Michael Chan',
     url: 'https://reactpatterns.com/',
-    likes: 7,
+    votes: 7,
     __v: 0,
   },
   {
@@ -14,7 +15,7 @@ const initialBlogs = [
     author: 'Edsger W. Dijkstra',
     url:
       'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
-    likes: 5,
+    votes: 5,
     __v: 0,
   },
 ]
@@ -37,7 +38,14 @@ const usersInDb = async () => {
   return users.map(u => u.toJSON())
 }
 
+const createUser = async (username, password) => {
+  const passwordHash = await bcrypt.hash(password, 10)
+  const user = new User({ username, passwordHash })
+  await user.save()
+  return user
+}
+
 module.exports = {
-  initialBlogs, nonExistingId, blogsInDb, usersInDb
+  initialBlogs, nonExistingId, blogsInDb, usersInDb, createUser
 }
 
