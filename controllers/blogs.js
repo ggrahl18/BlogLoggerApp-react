@@ -22,7 +22,26 @@ blogsRouter.post('/', async (request, response) => {
   const body = request.body
 
   if (!body.title && !body.url && !body.author) {
+    console.log('Make sure a title, author, and URL have been entered.')
     return response.status(400).end()
+  }
+
+  if (body.title.length < 1) {
+    return response.status(400).json({
+      error: 'Title must contain at least 3'
+    })
+  }
+
+  if (body.author.length < 1) {
+    return response.status(400).json({
+      error: 'Author must contain at least 2 characters'
+    })
+  }
+
+  if (body.url.length < 8) {
+    return response.status(400).json({
+      error: 'Enter a valid URL address'
+    })
   }
 
   const decodedToken = jwt.verify(request.token, process.env.SECRET)

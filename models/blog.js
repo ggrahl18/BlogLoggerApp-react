@@ -16,7 +16,7 @@ const blogSchema = new mongoose.Schema({
   },
   author: {
     type: String,
-    minLength: 3,
+    minLength: 2,
     required: [ true, 'An author is required' ]
   },
   votes: Number,
