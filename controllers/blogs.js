@@ -93,8 +93,6 @@ blogsRouter.delete('/:id', async (request, response) => {
   }
 
   return response.status(400).json({ error: 'blog does not have a user' })
-  // await Blog.findByIdAndRemove(request.params.id)
-  // response.status(204).end()
 })
 
 module.exports = blogsRouter
