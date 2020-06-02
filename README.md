@@ -1,5 +1,5 @@
 # Blog Logger App
-*Inspired by Full Stack Open 2020* 
+https://bloglogger-app.herokuapp.com/
 
 **Built with** ReactJS, Express, Axios, Mongoose, MongoDB, Jest, Nodemon esLint, bcrypt, dotenv, jsonwebtoken, cors, cross-env
 
@@ -8,3 +8,5 @@
 - `cd into <git@github.com...>`
 - `npm install`
 - `npm run dev`
+
+*Inspired by Full Stack Open 2020* 
